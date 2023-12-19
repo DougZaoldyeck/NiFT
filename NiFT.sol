@@ -46,6 +46,10 @@ contract NiFT {
         uint amount;
         uint256 sk1x;
         uint256 sk1y; //the pre-set results calculated by the buyer(sender) for future checking
+        uint256 c1x;
+        uint256 c1y;
+        uint256 c2x;
+        uint256 c2y;
         uint timelock; // UNIX timestamp seconds - locked UNTIL this time
         bool withdrawn;
         bool refunded;
@@ -122,6 +126,10 @@ contract NiFT {
                 msg.value,
                 _sk1x,
                 _sk1y,
+                _c1x,
+                _c1y,
+                _c2x,
+                _c2y,
                 _timelock
             )
         );
@@ -138,6 +146,10 @@ contract NiFT {
             msg.value,
             _sk1x,
             _sk1y,
+            _c1x,
+            _c1y,
+            _c2x,
+            _c2y,
             _timelock,
             false,
             false
@@ -215,12 +227,16 @@ contract NiFT {
         uint amount,
         uint256 sk1x,
         uint256 sk1y,
+        uint256 c1x,
+        uint256 c1y,
+        uint256 c2x,
+        uint256 c2y,
         uint timelock,
         bool withdrawn,
         bool refunded)
     {
         if (haveContract(_contractId) == false)
-            return (address(0), address(0), 0, 0, 0, 0, false, false);
+            return (address(0), address(0), 0, 0, 0, 0, 0, 0, 0, 0, false, false);
         LockContract storage c = contracts[_contractId];
         return (
             c.sender,
@@ -228,6 +244,10 @@ contract NiFT {
             c.amount,
             c.sk1x,
             c.sk1y,
+            c.c1x,
+            c.c1y,
+            c.c2x,
+            c.c2y,
             c.timelock,
             c.withdrawn,
             c.refunded
